@@ -25,6 +25,6 @@ package au.com.nullpointer.gp.scp;
  * @author shane
  *
  */
-public class SecureChannelProtocol02 extends SecureChannel {
+public class SecureChannelProtocol03 extends SecureChannel {
 
 }

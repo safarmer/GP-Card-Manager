@@ -1,5 +1,23 @@
-/**
+/*
+ * Copyright (c) 2011 NullPointer Software
  * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE. 
  */
 package au.com.nullpointer.gp.der;
 
@@ -16,11 +34,10 @@ import org.bouncycastle.asn1.DEREncodable;
  * @author shane
  * 
  */
-public class CardRecognitionData {
-    private static final int TAG_CARD_DATA = 6;
-    private static final int TAG_CARD_RECOGNITION_DATA = 19;
-
-    private final static ASN1ObjectIdentifier GP_OID = new ASN1ObjectIdentifier("1.2.840.114283");
+public class CardData {
+    public static final int TAG_CARD_DATA = 6;
+    public static final int TAG_CARD_RECOGNITION_DATA = 19;
+    public final static ASN1ObjectIdentifier GP_OID = new ASN1ObjectIdentifier("1.2.840.114283");
 
     private String gpVersion;
     private int scpVersion;
@@ -28,15 +45,9 @@ public class CardRecognitionData {
     private String cardConfig;
     private String chip;
 
-    public CardRecognitionData(byte[] encoded) throws DecodingException {
+    public CardData(byte[] encoded) throws DecodingException {
         try {
-            DERApplicationSpecific cardData = (DERApplicationSpecific) ASN1Object.fromByteArray(encoded);
-
-            if (cardData.getApplicationTag() != TAG_CARD_DATA) {
-                throw new DecodingException(TAG_CARD_DATA, cardData.getApplicationTag());
-            }
-
-            DERApplicationSpecific cardRecData = (DERApplicationSpecific) ASN1Sequence.fromByteArray(cardData.getContents());
+            DERApplicationSpecific cardRecData = (DERApplicationSpecific) ASN1Sequence.fromByteArray(encoded);
 
             if (cardRecData.getApplicationTag() != TAG_CARD_RECOGNITION_DATA) {
                 throw new DecodingException(TAG_CARD_RECOGNITION_DATA, cardRecData.getApplicationTag());
@@ -60,7 +71,6 @@ public class CardRecognitionData {
                     int tag = as.getApplicationTag();
 
                     ASN1ObjectIdentifier oid = (ASN1ObjectIdentifier) ASN1Object.fromByteArray(as.getContents());
-                    System.out.println(tag + ": " + oid);
 
                     switch (tag) {
                         case 0:

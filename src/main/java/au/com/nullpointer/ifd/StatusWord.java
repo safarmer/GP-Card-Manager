@@ -19,12 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE. 
  */
-package au.com.nullpointer.gp.scp;
+package au.com.nullpointer.ifd;
 
 /**
  * @author shane
- *
+ * 
  */
-public class SecureChannelProtocol02 extends SecureChannel {
+public enum StatusWord {
+    NO_ERROR(0x9000, false, false);
+
+    private int value;
+    private boolean error;
+    private boolean warning;
+
+    private StatusWord(int value, boolean error, boolean warning) {
+        this.value = value;
+        this.error = error;
+        this.warning = warning;
+    }
+
+    /**
+     * @return the value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * @return the error
+     */
+    public boolean isError() {
+        return error;
+    }
+
+    /**
+     * @return the warning
+     */
+    public boolean isWarning() {
+        return warning;
+    }
 
 }

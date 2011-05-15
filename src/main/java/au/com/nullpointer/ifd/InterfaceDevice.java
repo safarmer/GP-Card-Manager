@@ -19,12 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE. 
  */
-package au.com.nullpointer.gp.scp;
+package au.com.nullpointer.ifd;
 
 /**
  * @author shane
- *
+ * 
  */
-public class SecureChannelProtocol02 extends SecureChannel {
+public interface InterfaceDevice {
+    byte[] transmit(byte[] command);
 
+    byte[] transmit(int cla, int ins, int p1, int p2, StatusWord... sw);
+
+    byte[] transmit(int cla, int ins, int p1, int p2, Integer le, StatusWord... sw);
+
+    byte[] transmit(int cla, int ins, int p1, int p2, byte[] data, StatusWord... sw);
+
+    byte[] transmit(int cla, int ins, int p1, int p2, byte[] data, Integer le, StatusWord... sw);
 }
