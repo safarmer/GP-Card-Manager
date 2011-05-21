@@ -34,11 +34,6 @@
       <artifactId>bcprov-jdk16</artifactId>
       <version>1.46</version>
     </dependency>
-    <dependency>
-      <groupId>au.com.nullpointer.util</groupId>
-      <artifactId>codec</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
 
     <!-- Test Dependencies -->
     <dependency>

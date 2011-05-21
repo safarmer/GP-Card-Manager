@@ -34,6 +34,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import au.com.nullpointer.codec.HexString;
 import au.com.nullpointer.gp.der.CardRecognitionData;
 import au.com.nullpointer.ifd.InterfaceDevice;
+import au.com.nullpointer.iso7816.AID;
 
 /**
  * @author shane
@@ -152,8 +153,29 @@ public class GPCardManagerTest {
      * Test method for {@link au.com.nullpointer.gp.GPCardManager#delete(byte[], boolean)}.
      */
     @Test
-    public void testDelete() {
-        fail("Not yet implemented");
+    public void testDeleteOneApplet() {
+        //when(ifd.transmit(0x80, 0xc4, 0x00, 0x00, HexString.decode("4f07a0000000010001"))).thenReturn(HexString.decode("9000"));
+
+        GPCardManager cm = new GPCardManager(ifd);
+        AID aid = new AID(HexString.decode("a0000000010001"));
+        cm.delete(aid);
+
+        verify(ifd).transmit(0x80, 0xe4, 0x00, 0x00, HexString.decode("4f07a0000000010001"));
+    }
+
+    /**
+     * Test method for {@link au.com.nullpointer.gp.GPCardManager#delete(byte[], boolean)}.
+     */
+    @Test
+    public void testDeleteTwoApplets() {
+//        when(ifd.transmit(0x80, 0xc4, 0x00, 0x00, HexString.decode("4f07a00000000100014f07a0000000010002"))).thenReturn(
+//                HexString.decode("9000"));
+
+        GPCardManager cm = new GPCardManager(ifd);
+        AID[] aids = { new AID(HexString.decode("a0000000010001")), new AID(HexString.decode("a0000000010002")) };
+        cm.delete(aids);
+
+        verify(ifd, only()).transmit(0x80, 0xe4, 0x00, 0x00, HexString.decode("4f07a00000000100014f07a0000000010002"));
     }
 
     /**
