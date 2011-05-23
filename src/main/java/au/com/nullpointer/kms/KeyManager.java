@@ -17,14 +17,22 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE. 
+ * THE SOFTWARE.
  */
-package au.com.nullpointer.codec;
+package au.com.nullpointer.kms;
 
 /**
  * @author shane
- *
+ * 
  */
-public class TLV {
-    
+public abstract class KeyManager {
+    protected abstract void loadKeyStore() throws KeyManagerException;
+
+    public static KeyManager createKeyManager() throws KeyManagerException {
+        return new JCEKeyManager();
+    }
+
+    protected KeyManager() throws KeyManagerException {
+        loadKeyStore();
+    }
 }

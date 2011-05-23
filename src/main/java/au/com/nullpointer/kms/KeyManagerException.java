@@ -17,14 +17,43 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE. 
+ * THE SOFTWARE.
  */
-package au.com.nullpointer.codec;
+package au.com.nullpointer.kms;
 
 /**
  * @author shane
- *
+ * 
  */
-public class TLV {
-    
+public class KeyManagerException extends Exception {
+    private static final long serialVersionUID = -3436247524356094406L;
+
+    /**
+     * 
+     */
+    public KeyManagerException() {
+    }
+
+    /**
+     * @param message
+     */
+    public KeyManagerException(String message) {
+        super(message);
+    }
+
+    /**
+     * @param cause
+     */
+    public KeyManagerException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * @param message
+     * @param cause
+     */
+    public KeyManagerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
