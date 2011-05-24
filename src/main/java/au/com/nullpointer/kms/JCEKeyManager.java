@@ -21,17 +21,50 @@
  */
 package au.com.nullpointer.kms;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
 /**
  * @author shane
  * 
  */
 public class JCEKeyManager extends KeyManager {
+    public final static String DEFAULT_KEYSTORE = System.getProperty("user.home") + "/.kms/keystore.jks";
+    public final static String DEFAULT_PASSWORD = "changeit";
 
     /**
      * @throws KeyManagerException
      */
-    protected JCEKeyManager() throws KeyManagerException {
+    protected JCEKeyManager(File keyFile, String passwd) throws KeyManagerException {
         super();
+        try {
+            store = KeyStore.getInstance("JCEKS");
+            store.load(new FileInputStream(keyFile), passwd.toCharArray());
+        } catch (KeyStoreException e) {
+            throw new KeyManagerException("Could not initialise key store", e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new KeyManagerException("Could not initialise key store. A required algorithm may be unavailable", e);
+        } catch (CertificateException e) {
+            throw new KeyManagerException("Could not initialise key store. One or more certificates could not be loaded", e);
+        } catch (FileNotFoundException e) {
+            throw new KeyManagerException("Could not initialise key store. The key store file is not available", e);
+        } catch (IOException e) {
+            throw new KeyManagerException("Could not initialise key store. COUld not read from key store file", e);
+        }
+    }
+
+    /**
+     * @throws KeyManagerException
+     * 
+     */
+    protected JCEKeyManager() throws KeyManagerException {
+        this(new File(DEFAULT_KEYSTORE), DEFAULT_PASSWORD);
     }
 
     /*

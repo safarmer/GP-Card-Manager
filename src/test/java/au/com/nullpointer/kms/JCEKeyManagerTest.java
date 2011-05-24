@@ -21,42 +21,21 @@
  */
 package au.com.nullpointer.kms;
 
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 
 /**
  * @author shane
- * 
+ *
  */
-public abstract class KeyManager {
-
-    protected KeyStore store;
-
-    protected abstract void loadKeyStore() throws KeyManagerException;
-
-    public static KeyManager createKeyManager() throws KeyManagerException {
-        return new JCEKeyManager();
-    }
-
-    protected KeyManager() throws KeyManagerException {
-        loadKeyStore();
-    }
-
-    public List<String> listKeys() throws KeyManagerException {
-        List<String> keys = new ArrayList<String>();
-
-        try {
-            Enumeration<String> aliases = store.aliases();
-            while (aliases.hasMoreElements()) {
-                keys.add(aliases.nextElement());
-            }
-        } catch (KeyStoreException e) {
-            throw new KeyManagerException("Could not retrieve key list", e);
-        }
-
-        return keys;
+public class JCEKeyManagerTest {
+    @Test
+    public void testJCEKeyManager() throws Exception {
+        KeyManager kms = KeyManager.createKeyManager();
+        
+        assertNotNull(kms);
+        assertEquals(JCEKeyManager.class, kms.getClass());
     }
 }

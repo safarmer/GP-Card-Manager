@@ -41,7 +41,7 @@ import au.com.nullpointer.kms.KeySet;
 public class Security {
     private Cipher desCbcCipher;
     private Cipher desEcbCipher;
-    private SecretKeySpec singledesCMAC;
+    private SecretKey singledesCMAC;
 
     private final static byte[] DEFAULT_ICV = new byte[8];
     private final static Logger LOG = Logger.getLogger(Security.class);

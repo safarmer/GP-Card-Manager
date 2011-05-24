@@ -32,6 +32,13 @@ public class KeySet {
     private SecretKey macKey;
     private SecretKey dekKey;
 
+    /**
+     * 
+     */
+    public KeySet() {
+        // empty key set
+    }
+
     public KeySet(SecretKey master) {
         this.encKey = master;
         this.macKey = master;
